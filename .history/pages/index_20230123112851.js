@@ -23,8 +23,7 @@ const Container = styled.div`
   width:80vw;
   display:flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  margin: ${props=>props.margin}
+  justify-content: space-around
 `
 
 
@@ -138,7 +137,7 @@ export default function Home() {
           <Heading>DrinkUp</Heading>
           <Input value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail}></Input>
         </FlexBox>
-        <FlexBox height="fit-content" width="85vw" maxWidth="830px" position="absolute" boxShadow="0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #D255C6, 0px 0px 4px 10px rgba(210, 85, 198, 0.18), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #D255C6, inset 0px 0px 4px 10px rgba(210, 85, 198, 0.18)" padding="35px" top="200px" dir="column" bgColor="rgba(0, 0, 0, 0.75);">
+        <FlexBox width="85vw" maxWidth="830px" position="absolute" boxShadow="0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #D255C6, 0px 0px 4px 10px rgba(210, 85, 198, 0.18), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #D255C6, inset 0px 0px 4px 10px rgba(210, 85, 198, 0.18)" padding="35px" top="200px" dir="column" bgColor="rgba(0, 0, 0, 0.75);">
             <Heading>Welcome to DrinkUp</Heading>
             <Paragraph padding="10px 0 0 0">Simplifying your Cocktail Preferences</Paragraph>
             <Paragraph padding="30px 0 0 0">DrinkUp, a pain-point that became a project, is inspired to help new-legal aged people to find their favourite cocktails to order in their next pub, bar, and/or nightclub visit. Drink Responsibly!</Paragraph>
