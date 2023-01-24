@@ -1,6 +1,8 @@
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Lottie from "lottie-react";
+import { motion, useAnimation } from 'framer-motion'; 
+import { useInView } from 'react-intersection-observer';
 import LoadingAnimation from '../public/loadingCocktail.json'
 import axios from 'axios';
 import styled from 'styled-components';
@@ -9,16 +11,17 @@ import Input from '@/comps/input';
 import Button from '@/comps/button';
 import { neonColours } from '@/styles/neoncolours';
 
+
 const Card = styled.div`
   width:25vw;
-  min-width:210px;
+  min-width:200px;
   height:fit-content;
   background-color:black;
   display:flex;
   align-items:center;
   flex-direction:column;
   padding:10px;
-  margin: 20px 35px;
+  margin: 15px 20px;
   border-radius:10px;
   color:white;
   box-shadow:${props=>props.boxShadow}
@@ -39,7 +42,10 @@ export default function Home() {
   const [cocktails, setCocktails] = useState()
   const [newCocktails, setNewCocktails] = useState()
   const [search, setSearch] = useState("")
-  
+  const [error, setError] = useState("")
+  const control = useAnimation()
+  const [ref, inView] = useInView({triggerOnce: true})
+
   const listOfAlcohol = [
     "Alcoholic",
     "Non alcoholic",
@@ -76,6 +82,10 @@ export default function Home() {
         setLoading(true);
         setCocktails();
         setNewCocktails()
+
+        if(category == "" || ingredients == "" || alcoholic == ""){
+          setError("You are missing to fill out one or more of the three fields")
+        }
 
         function FilteringCocktails(){
           var matchCocktail = [];
@@ -135,7 +145,21 @@ export default function Home() {
   }
 
   useEffect(() => {
-  }, [])
+    if (inView) {
+      control.start({
+        opacity: 1,
+        scale:1,
+        transition: {
+          duration:1
+        }
+      })
+    } else {
+      control.start({
+        opacity: 0,
+        scale:0
+      })
+    }
+  }, [control, inView])
 
   return (
     <>
@@ -169,11 +193,11 @@ export default function Home() {
         
         <FlexBox dir="column" bgColor="#590067" padding="40px 0" width="100vw">
 
-          <FlexBox bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.blueBox} dir="column"  margin="0 0 40px 0">
+          <FlexBox ref={ref} as={motion.div} initial={{opacity:0}} animate={control} bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.blueBox} dir="column"  margin="0 0 40px 0">
             <Heading textShadow={neonColours.blueText} padding="0 0 25px 0">Categories</Heading>
-            <FlexBox flexWrap="wrap">
+            <FlexBox flexWrap="wrap" >
               {listOfCategories.map((o)=>(
-                <Button txt={o} bgColor={category == o ? "white" : "black"} color={category == o ? "black" : "white"} onClick={()=>{setCategory(o)}} height="fit-content" boxShadow={neonColours.blueBox} padding="15px" top="200px" dir="column"/>
+                <Button  txt={o} bgColor={category == o ? "white" : "black"} color={category == o ? "black" : "white"} onClick={()=>{setCategory(o)}} height="fit-content" boxShadow={neonColours.blueBox} padding="15px" top="200px" dir="column"/>
               ))}
             </FlexBox>
           </FlexBox>
@@ -195,22 +219,25 @@ export default function Home() {
             ))}
             </FlexBox>
           </FlexBox>
-        </FlexBox>
-        <button onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</button>   
+
+          
+
+          <button onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</button>   
           {loading && <Lottie style={{height:100, width:100}} animationData={LoadingAnimation} loop={true}></Lottie>}
-          <FlexBox width="100vw">
-            <FlexBox overflowX="scroll" justifyContent="flex-start">
-            {newCocktails && newCocktails.map(
-              (o, index)=>(
-                <Card key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
-                  <Image src={o.strDrinkThumb} width="90%"></Image>
-                  <H4>{o.strDrink}</H4>
-                  
-                </Card>
-              )
-            )}
-            </FlexBox>
+        <FlexBox width="100vw">
+          <FlexBox overflowX="scroll" justifyContent="flex-start">
+          {newCocktails && newCocktails.map(
+            (o, index)=>(
+              <Card as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
+                <Image src={o.strDrinkThumb} width="90%"></Image>
+                <H4>{o.strDrink}</H4>
+              </Card>
+            )
+          )}
           </FlexBox>
+        </FlexBox>
+        </FlexBox>
+       
           
       </main>
     </>
