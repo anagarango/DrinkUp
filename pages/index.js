@@ -73,44 +73,43 @@ export default function Home() {
     "Lime"
   ]
 
-  const url =`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=m`
- 
+
 
   const GetCocktail = async () => {
-    await axios.get(url)
-    .then((results) => {
-        setLoading(true);
-        setCocktails();
-        setNewCocktails()
+    var allCocktails = []
+    setLoading(true);
+    setCocktails();
+    setNewCocktails()
 
-        if(category == "" || ingredients == "" || alcoholic == ""){
-          setError("You are missing to fill out one or more of the three fields")
-        }
+    if(category == "" || ingredients == "" || alcoholic == ""){
+      setError("You are missing to fill out one or more of the three fields")
+    }
 
-        function FilteringCocktails(){
-          var matchCocktail = [];
-          const drinks = results.data.drinks
-          for(var x = 0; x < drinks.length; x++){
-            if(drinks[x].strCategory == category && drinks[x].strAlcoholic == alcoholic){
-              for(var i = 1; i <= 15; i++){
-                if(drinks[x]['strIngredient'+i] == ingredients){
-                  matchCocktail.push(drinks[x])
+    for(let q = 'a'.charCodeAt(0); q <= 'z'.charCodeAt(0); q++) {
+      let letter = String.fromCharCode(q);
+        await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`)
+        .then((results) => {
+
+            const drinks = results.data.drinks
+            for(var x = 0; x < drinks.length; x++){
+              if(drinks[x].strCategory == category && drinks[x].strAlcoholic == alcoholic){
+                for(var i = 1; i <= 15; i++){
+                  if(drinks[x]['strIngredient'+i] == ingredients){
+                    allCocktails.push(drinks[x])
+                  }
                 }
               }
             }
-          }
-          return matchCocktail
-        }
       
-        setTimeout(() => {
-          setCocktails(results.data.drinks);
-          setNewCocktails(FilteringCocktails)
-          setLoading(false)
-        }, 1500);
-      
-    }).catch((error)=>{
-        console.log(error);
-    })
+      }).catch((error)=>{
+          console.log(error);
+      })
+    }
+    setTimeout(() => {
+              // setCocktails(results.data.drinks);
+              setNewCocktails(allCocktails)
+              setLoading(false)
+            },0);
   }
 
   const SearchCocktail = async (event) => {

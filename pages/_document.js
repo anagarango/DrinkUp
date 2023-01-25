@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <link rel="preconnect" href="https://fonts.googleapis.com"/> 
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin={true}/> 
+          <link rel="preconnect" href="https://fonts.gstatic.com"/> 
           <link href="https://fonts.googleapis.com/css?family=Montserrat&effect=neon" rel="stylesheet"/>
           <link href="https://fonts.googleapis.com/css2?family=Neonderthaw&effect=neon" rel="stylesheet"></link>
           <link href="https://fonts.googleapis.com/css2?family=Train+One&effect=neon" rel="stylesheet"></link>
