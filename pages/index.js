@@ -33,6 +33,13 @@ const H4 = styled.h4`
 
 `
 
+const Text = styled.p`
+  color:${props=>props.color};
+  font-size: ${props=>props.fontSize};
+  font-weight: ${props=>props.fontWeight}
+  margin: ${props=>props.margin}
+`
+
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -41,6 +48,9 @@ export default function Home() {
   const [alcoholic, setAlcoholic] = useState("")
   const [cocktails, setCocktails] = useState()
   const [newCocktails, setNewCocktails] = useState()
+  const [activity, setActivity] = useState()
+  const [objIngredients, setObjIngredients] = useState([])
+  const [cardy, setCardy] = useState({})
   const [search, setSearch] = useState("")
   const [error, setError] = useState("")
   const control = useAnimation()
@@ -95,7 +105,10 @@ export default function Home() {
               if(drinks[x].strCategory == category && drinks[x].strAlcoholic == alcoholic){
                 for(var i = 1; i <= 15; i++){
                   if(drinks[x]['strIngredient'+i] == ingredients){
+                    //если из всез дринков ингридиент равен ингридиенту на который кликнули
                     allCocktails.push(drinks[x])
+                    //то он идет в скролл бар
+                    //тогда дринк х идет 
                   }
                 }
               }
@@ -142,6 +155,73 @@ export default function Home() {
       })
     }
   }
+
+
+  const GetActivity = async () => {
+    await axios.get('http://www.boredapi.com/api/activity/')
+    .then((response) => {
+      setActivity(response.data.activity);
+        // console.log(response.data.activity);
+        // console.log(response.data);
+        // setActivity(true);
+      
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
+
+
+  function handleClick(data){
+    setCardy(data);
+    // console.log(data)
+  }
+
+  // function objectIngredients(data){
+  //   let objectIngredients = [];
+  //   setObjIngredients(objectIngredients)
+  //   for (var i=0; i < data.length; i++){
+  //     console.log(i)
+  //     if(data[`strIngredient${i}`]==true){
+  //       objectIngredients.push(data[`strIngredient${i}`])
+  //     } 
+  //   }
+  //   console.log(objIngredients)
+  // }
+
+  function objectIngredients(data){
+    console.log(data)
+    var objIngredients = []
+
+    for(var i = 1; i <= 15; i++){
+      if(data['strIngredient'+i] !== null){
+        objIngredients.push(data['strIngredient'+i])
+
+      }
+    }
+    console.log(objIngredients)
+    setObjIngredients(objIngredients)
+  }
+
+  // function objectInstructions(data){
+  //   console.log(data)
+  //   var objInstructions;
+
+  //   for(var i = 1; i <= 15; i++){
+  //     if(data['strIngredient'+i] !== null){
+  //       objIngredients.push(data['strIngredient'+i])
+
+  //   console.log(objIngredients)
+  //   setObjIngredients(objIngredients)
+  // }
+
+  // function objectIngredients({data}){
+  //   let objectIngredients = data;
+  //   setObjIngredients(objectIngredients)
+    
+  //   console.log(objIngredients)
+  // }
+
+
 
   useEffect(() => {
     if (inView) {
@@ -223,19 +303,50 @@ export default function Home() {
 
           <button onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</button>   
           {loading && <Lottie style={{height:100, width:100}} animationData={LoadingAnimation} loop={true}></Lottie>}
-        <FlexBox width="100vw">
+        <FlexBox width="100vw" dir="column">
+
           <FlexBox overflowX="scroll" justifyContent="flex-start">
           {newCocktails && newCocktails.map(
             (o, index)=>(
-              <Card as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
+              // <FlexBox dir="column">
+              <Card onClick={()=> {GetActivity(); handleClick(o); objectIngredients(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
                 <Image src={o.strDrinkThumb} width="90%"></Image>
-                <H4>{o.strDrink}</H4>
-              </Card>
+                <Text fontSize="18px">{o.strDrink}</Text>
+              </Card> 
+
             )
-          )}
+          )
+          }
           </FlexBox>
+
+          {activity && 
+          <FlexBox dir="column" alignItems="flex-start" width="850px" height="fit-content" bgColor="rgba(0, 0, 0, 0.65)" padding="3em">
+          <FlexBox>
+            <Text color="white" fontSize="32px">{cardy.strDrink}</Text>
+            {/* <Heading textShadow={neonColours.greenText} padding="0 0 25px 0">{cardy.strDrink}</Heading> */}
+            {/* <Text color="white" fontSize="18px">{cardy.strAlcoholic}</Text> */}
+            <li style={{color:"white", fontSize:"18px", marginLeft:"20px"}}>{cardy.strAlcoholic}</li>
+          </FlexBox>
+          <FlexBox margin="20px 0 40px 0"><Image src={cardy.strDrinkThumb} width="245px"></Image></FlexBox>
+          <FlexBox alignItems="flex-start">
+              <FlexBox dir="column" alignItems="flex-start" width="40%">
+                <Text color="white" fontWeight="bold" fontSize="18px" margin="10px">Ingredients:</Text>
+                <FlexBox dir="column" alignItems="flex-start" margin="10px 0 0 0">{objIngredients.map((ingredient, index) => (<li style={{color:"white", fontSize:"18px"}}>{ingredient}</li>))}</FlexBox>
+              </FlexBox>
+              <FlexBox width="60%" dir="column" alignItems="flex-start">
+                <Text color="white" fontWeight="bold" fontSize="18px">Instructions:</Text>
+                <FlexBox alignItems="flex-start" margin="10px 0 0 0"><Text color="white" fontSize="18px">{cardy.strInstructions}</Text></FlexBox>
+              </FlexBox>
+          </FlexBox>
+            <FlexBox margin="30px 0 0 0">
+              {activity &&
+                <Text color="white" fontSize="18px">Fun activity to do when you get drunk: {activity}</Text>
+              }
+            </FlexBox>
         </FlexBox>
-        </FlexBox>
+}
+      </FlexBox>  
+    </FlexBox>
        
           
       </main>
