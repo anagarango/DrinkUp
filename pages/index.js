@@ -10,18 +10,20 @@ import { FlexBox, Heading, Paragraph, Image } from '../styles/global';
 import Input from '@/comps/input';
 import Button from '@/comps/button';
 import { neonColours } from '@/styles/neoncolours';
+import { getFontDefinitionFromNetwork } from 'next/dist/server/font-utils';
 
 
 const Card = styled.div`
   width:25vw;
-  min-width:200px;
+  min-width:175px;
   height:fit-content;
+  max-width:250px;
   background-color:black;
   display:flex;
   align-items:center;
   flex-direction:column;
   padding:10px;
-  margin: 15px 20px;
+  margin:30px 20px;
   border-radius:10px;
   color:white;
   box-shadow:${props=>props.boxShadow}
@@ -45,6 +47,7 @@ export default function Home() {
   const [error, setError] = useState("")
   const control = useAnimation()
   const [ref, inView] = useInView({triggerOnce: true})
+  const  [cardy, setCardy] = useState({})
 
   const listOfAlcohol = [
     "Alcoholic",
@@ -60,17 +63,23 @@ export default function Home() {
   ]
 
   const listOfIngredients = [
-    "Applejack",
+    "Coffee",
     "Gin",
-    "Dark rum",
-    "Sweet Vermouth",
+    "Pineapple juice",
+    "Kahlua",
     "Strawberry schnapps",
     "Mango",
     "Kiwi",
     "Orange juice",
     "Lemon",
     "Cranberry juice",
-    "Lime"
+    "Lime",
+    "Apple juice",
+    "Peach Vodka",
+    "Cranberries",
+    "Apple cider",
+    "Grape juice",
+    "Chocolate liqueur"
   ]
 
 
@@ -143,6 +152,11 @@ export default function Home() {
     }
   }
 
+  function GetChosen(data){
+    setCardy(data);
+    console.log(cardy)
+  }
+
   useEffect(() => {
     if (inView) {
       control.start({
@@ -195,8 +209,8 @@ export default function Home() {
           <FlexBox ref={ref} as={motion.div} initial={{opacity:0}} animate={control} bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.blueBox} dir="column"  margin="0 0 40px 0">
             <Heading textShadow={neonColours.blueText} padding="0 0 25px 0">Categories</Heading>
             <FlexBox flexWrap="wrap" >
-              {listOfCategories.map((o)=>(
-                <Button  txt={o} bgColor={category == o ? "white" : "black"} color={category == o ? "black" : "white"} onClick={()=>{setCategory(o)}} height="fit-content" boxShadow={neonColours.blueBox} padding="15px" top="200px" dir="column"/>
+              {listOfCategories.map((o, index)=>(
+                <Button key={index}  txt={o} bgColor={category == o ? "white" : "black"} color={category == o ? "black" : "white"} onClick={()=>{setCategory(o)}} height="fit-content" boxShadow={neonColours.blueBox} padding="15px" top="200px" dir="column"/>
               ))}
             </FlexBox>
           </FlexBox>
@@ -204,37 +218,40 @@ export default function Home() {
           <FlexBox bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.orangeBox} dir="column" margin="0 0 40px 0">
             <Heading textShadow={neonColours.orangeText} padding="0 0 25px 0">Flavours</Heading>
             <FlexBox flexWrap="wrap" >
-            {listOfIngredients.map((o)=>(
-              <Button txt={o} bgColor={ingredients == o ? "white" : "black"} color={ingredients == o ? "black" : "white"} onClick={()=>{setIngredients(o)}} height="fit-content" boxShadow={neonColours.orangeBox} padding="15px" top="200px" dir="column"/>
+            {listOfIngredients.map((o, index)=>(
+              <Button key={index} txt={o} bgColor={ingredients == o ? "white" : "black"} color={ingredients == o ? "black" : "white"} onClick={()=>{setIngredients(o)}} height="fit-content" boxShadow={neonColours.orangeBox} padding="15px" top="200px" dir="column"/>
             ))}
             </FlexBox>
           </FlexBox>
 
-          <FlexBox bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.greenBox} dir="column"  margin="0 0 40px 0">
+          <FlexBox bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.greenBox} dir="column" margin="0 0 40px 0">
             <Heading textShadow={neonColours.greenText} padding="0 0 25px 0">Alcoholic</Heading>
             <FlexBox flexWrap="wrap">
-            {listOfAlcohol.map((o)=>(
-              <Button txt={o} bgColor={alcoholic == o ? "white" : "black"} color={alcoholic == o ? "black" : "white"} onClick={()=>{setAlcoholic(o)}} height="fit-content" boxShadow={neonColours.greenBox} padding="15px" top="200px" dir="column"/>
+            {listOfAlcohol.map((o, index)=>(
+              <Button key={index} txt={o} bgColor={alcoholic == o ? "white" : "black"} color={alcoholic == o ? "black" : "white"} onClick={()=>{setAlcoholic(o)}} height="fit-content" boxShadow={neonColours.greenBox} padding="15px" top="200px" dir="column"/>
             ))}
             </FlexBox>
           </FlexBox>
+          <FlexBox zIndex="1">
+            <FlexBox className='block glow' onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</FlexBox>   
+          </FlexBox>
 
-          
-
-          <button onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</button>   
-          {loading && <Lottie style={{height:100, width:100}} animationData={LoadingAnimation} loop={true}></Lottie>}
+          {loading && <Lottie style={{height:300, width:300}} animationData={LoadingAnimation} loop={true}></Lottie>}
         <FlexBox width="100vw">
-          <FlexBox overflowX="scroll" justifyContent="flex-start">
+          <FlexBox overflowX="scroll" justifyContent="flex-start" padding="15px">
           {newCocktails && newCocktails.map(
             (o, index)=>(
-              <Card as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
-                <Image src={o.strDrinkThumb} width="90%"></Image>
+              <Card as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/3}}} key={index} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox} onClick={()=>{GetChosen(o)}}>
+                <Image src={o.strDrinkThumb} width="100%"></Image>
                 <H4>{o.strDrink}</H4>
               </Card>
             )
           )}
           </FlexBox>
         </FlexBox>
+          {cardy.strDrink}
+          {cardy.strCategory}
+          {cardy.strAlcoholic}
         </FlexBox>
        
           
