@@ -14,7 +14,8 @@ export default function Button({
   fontWeight = "600",
   onClick = ()=>{},
   border = "none",
-  boxShadow = "0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #08F7FE, 0px 0px 4px 10px rgba(0, 247, 254, 0.18), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #08F7FE, inset 0px 0px 4px 10px rgba(0, 247, 254, 0.18)"
+  boxShadow = "0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #08F7FE, 0px 0px 4px 10px rgba(0, 247, 254, 0.18), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #08F7FE, inset 0px 0px 4px 10px rgba(0, 247, 254, 0.18)",
+  value=""
 }) {
 
   // if (ifThisIsTheCategoriesButtons && !registerValue) {
@@ -56,6 +57,7 @@ export default function Button({
           fontWeight={fontWeight}
           border={border}
           boxShadow={boxShadow}
+          value={value}
         >
           {txt}
         </ButtonClick>

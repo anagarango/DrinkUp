@@ -92,3 +92,30 @@ export const Image = styled.img`
     bottom: ${props=>props.bottom};
     margin: ${props=>props.margin}
 `
+
+export const Card = styled.div`
+  width:25vw;
+  min-width:175px;
+  height:fit-content;
+  max-width:250px;
+  background-color:black;
+  display:flex;
+  align-items:center;
+  flex-direction:column;
+  padding:10px;
+  margin:30px 20px;
+  border-radius:10px;
+  color:white;
+  box-shadow:${props=>props.boxShadow}
+`
+
+export const H4 = styled.h4`
+
+`
+
+export const Text = styled.p`
+color:${props=>props.color};
+font-size: ${props=>props.fontSize};
+font-weight: ${props=>props.fontWeight};
+margin: ${props=>props.margin}
+`

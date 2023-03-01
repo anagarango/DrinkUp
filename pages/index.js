@@ -3,44 +3,15 @@ import { useEffect, useState, useRef } from 'react'
 import Lottie from "lottie-react";
 import { motion, useAnimation } from 'framer-motion'; 
 import { useInView } from 'react-intersection-observer';
-import LoadingAnimation from '../public/loadingCocktail.json'
+import LoadingAnimation from '@/public/loadingCocktail.json'
 import axios from 'axios';
-import styled from 'styled-components';
-import { FlexBox, Heading, Paragraph, Image } from '../styles/global';
-import Input from '@/comps/input';
-import Button from '@/comps/button';
+import { listOfAlcohol, listOfCategories, listOfIngredients} from '@/data'
+import { FlexBox, Heading, Paragraph, Image, Card, Text } from '@/styles/global';
 import { neonColours } from '@/styles/neoncolours';
-import { getFontDefinitionFromNetwork } from 'next/dist/server/font-utils';
+import NavBar from '@/comps/navbar';
+import Form from '@/comps/form';
 
 
-const Card = styled.div`
-  width:25vw;
-  min-width:175px;
-  height:fit-content;
-  max-width:250px;
-  background-color:black;
-  display:flex;
-  align-items:center;
-  flex-direction:column;
-  padding:10px;
-  margin:30px 20px;
-  border-radius:10px;
-  color:white;
-  box-shadow:${props=>props.boxShadow}
-`
-
-
-
-const H4 = styled.h4`
-
-`
-
-const Text = styled.p`
-  color:${props=>props.color};
-  font-size: ${props=>props.fontSize};
-  font-weight: ${props=>props.fontWeight}
-  margin: ${props=>props.margin}
-`
 
 
 export default function Home() {
@@ -48,76 +19,33 @@ export default function Home() {
   const [category, setCategory] = useState("")
   const [ingredients, setIngredients] = useState("")
   const [alcoholic, setAlcoholic] = useState("")
-  const [cocktails, setCocktails] = useState()
   const [newCocktails, setNewCocktails] = useState()
   const [activity, setActivity] = useState()
   const [objIngredients, setObjIngredients] = useState([])
   const [cardy, setCardy] = useState({})
   const [search, setSearch] = useState("")
-  const [error, setError] = useState("")
+
   const control = useAnimation()
   const [ref, inView] = useInView({triggerOnce: true})
-  const  [cardy, setCardy] = useState({})
 
-  const listOfAlcohol = [
-    "Alcoholic",
-    "Non alcoholic",
-    "Optional alcohol"
-  ]
-
-  const listOfCategories = [
-    "Cocktail",
-    "Ordinary Drink",
-    "Punch \/ Party Drink",
-    "Shake",
-  ]
-
-  const listOfIngredients = [
-    "Coffee",
-    "Gin",
-    "Pineapple juice",
-    "Kahlua",
-    "Strawberry schnapps",
-    "Mango",
-    "Kiwi",
-    "Orange juice",
-    "Lemon",
-    "Cranberry juice",
-    "Lime",
-    "Apple juice",
-    "Peach Vodka",
-    "Cranberries",
-    "Apple cider",
-    "Grape juice",
-    "Chocolate liqueur"
-  ]
 
 
 
   const GetCocktail = async () => {
     var allCocktails = []
     setLoading(true);
-    setCocktails();
     setNewCocktails()
-
-    if(category == "" || ingredients == "" || alcoholic == ""){
-      setError("You are missing to fill out one or more of the three fields")
-    }
 
     for(let q = 'a'.charCodeAt(0); q <= 'z'.charCodeAt(0); q++) {
       let letter = String.fromCharCode(q);
         await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${letter}`)
         .then((results) => {
-
             const drinks = results.data.drinks
             for(var x = 0; x < drinks.length; x++){
               if(drinks[x].strCategory == category && drinks[x].strAlcoholic == alcoholic){
                 for(var i = 1; i <= 15; i++){
                   if(drinks[x]['strIngredient'+i] == ingredients){
-                    //если из всез дринков ингридиент равен ингридиенту на который кликнули
                     allCocktails.push(drinks[x])
-                    //то он идет в скролл бар
-                    //тогда дринк х идет 
                   }
                 }
               }
@@ -127,11 +55,11 @@ export default function Home() {
           console.log(error);
       })
     }
+
     setTimeout(() => {
-              // setCocktails(results.data.drinks);
-              setNewCocktails(allCocktails)
-              setLoading(false)
-            },0);
+        setNewCocktails(allCocktails)
+        setLoading(false)
+    },0);
   }
 
   const SearchCocktail = async (event) => {
@@ -139,7 +67,6 @@ export default function Home() {
       await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
       .then((results) => {
         setLoading(true);
-        setCocktails();
         setNewCocktails()
 
         function SearchCocktail(){
@@ -153,7 +80,6 @@ export default function Home() {
         }
           
         setTimeout(() => {
-          setCocktails(results.data.drinks);
           setNewCocktails(SearchCocktail)
           setLoading(false)
         }, 1500);
@@ -168,7 +94,6 @@ export default function Home() {
 
   function GetChosen(data){
     setCardy(data);
-    console.log(cardy)
   }
 
 
@@ -176,9 +101,6 @@ export default function Home() {
     await axios.get('http://www.boredapi.com/api/activity/')
     .then((response) => {
       setActivity(response.data.activity);
-        // console.log(response.data.activity);
-        // console.log(response.data);
-        // setActivity(true);
       
     }).catch((error)=>{
       console.log(error);
@@ -186,25 +108,7 @@ export default function Home() {
   }
 
 
-  function handleClick(data){
-    setCardy(data);
-    // console.log(data)
-  }
-
-  // function objectIngredients(data){
-  //   let objectIngredients = [];
-  //   setObjIngredients(objectIngredients)
-  //   for (var i=0; i < data.length; i++){
-  //     console.log(i)
-  //     if(data[`strIngredient${i}`]==true){
-  //       objectIngredients.push(data[`strIngredient${i}`])
-  //     } 
-  //   }
-  //   console.log(objIngredients)
-  // }
-
   function objectIngredients(data){
-    console.log(data)
     var objIngredients = []
 
     for(var i = 1; i <= 15; i++){
@@ -213,30 +117,8 @@ export default function Home() {
 
       }
     }
-    console.log(objIngredients)
     setObjIngredients(objIngredients)
   }
-
-  // function objectInstructions(data){
-  //   console.log(data)
-  //   var objInstructions;
-
-  //   for(var i = 1; i <= 15; i++){
-  //     if(data['strIngredient'+i] !== null){
-  //       objIngredients.push(data['strIngredient'+i])
-
-  //   console.log(objIngredients)
-  //   setObjIngredients(objIngredients)
-  // }
-
-  // function objectIngredients({data}){
-  //   let objectIngredients = data;
-  //   setObjIngredients(objectIngredients)
-    
-  //   console.log(objIngredients)
-  // }
-
-
 
 
   useEffect(() => {
@@ -265,17 +147,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <FlexBox position="fixed" zIndex="10" top="0" width="100vw" height="70px" bgColor="black" justifyContent="space-between" padding="0px 25px">
-          <Heading fSize="calc(20px + 50%)">DrinkUp</Heading>
-          <Input value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail}></Input>
-        </FlexBox>
-        
-        {/* <NavBar></NavBar> */}
+        <NavBar value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail}/>
+
         <FlexBox bgImage="/Hero.jpeg" minHeight="fit-content" height="65vh" width="100vw" margin="70px 0 0 0">
           <FlexBox height="fit-content" width="85vw" maxWidth="830px" boxShadow={neonColours.pinkBox} padding="35px" top="200px" dir="column" bgColor="rgba(0, 0, 0, 0.8)">
             <Heading>Welcome to DrinkUp</Heading>
             <Paragraph padding="10px 0 0 0">Simplifying your Cocktail Preferences</Paragraph>
-            <span id="height"></span>
             <Paragraph textAlign="justify" padding="30px 0 0 0">DrinkUp, a pain-point that became a project, is inspired to help new-legal aged people to find their favourite cocktails to order in their next pub, bar, and/or nightclub visit. Drink Responsibly!</Paragraph>
           </FlexBox>
         </FlexBox>
@@ -287,80 +164,55 @@ export default function Home() {
         
         
         <FlexBox dir="column" bgColor="#590067" padding="40px 0" width="100vw">
+            <Form boxShadow={neonColours.blueBox} textShadow={neonColours.blueText} formHeading="Categories" array={listOfCategories} onClick={(event)=>{setCategory(event.target.value)}} state={category} ></Form>
+            <Form boxShadow={neonColours.orangeBox} textShadow={neonColours.orangeText} formHeading="Flavours" array={listOfIngredients} onClick={(event)=>{setIngredients(event.target.value)}} state={ingredients} ></Form>
+            <Form boxShadow={neonColours.greenBox} textShadow={neonColours.greenText} formHeading="Alcoholic" array={listOfAlcohol} onClick={(event)=>{setAlcoholic(event.target.value)}} state={alcoholic} ></Form>
 
-          <FlexBox ref={ref} as={motion.div} initial={{opacity:0}} animate={control} bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.blueBox} dir="column"  margin="0 0 40px 0">
-            <Heading textShadow={neonColours.blueText} padding="0 0 25px 0">Categories</Heading>
-            <FlexBox flexWrap="wrap" >
-              {listOfCategories.map((o, index)=>(
-                <Button key={index}  txt={o} bgColor={category == o ? "white" : "black"} color={category == o ? "black" : "white"} onClick={()=>{setCategory(o)}} height="fit-content" boxShadow={neonColours.blueBox} padding="15px" top="200px" dir="column"/>
-              ))}
-            </FlexBox>
-          </FlexBox>
-
-          <FlexBox bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.orangeBox} dir="column" margin="0 0 40px 0">
-            <Heading textShadow={neonColours.orangeText} padding="0 0 25px 0">Flavours</Heading>
-            <FlexBox flexWrap="wrap" >
-            {listOfIngredients.map((o, index)=>(
-              <Button key={index} txt={o} bgColor={ingredients == o ? "white" : "black"} color={ingredients == o ? "black" : "white"} onClick={()=>{setIngredients(o)}} height="fit-content" boxShadow={neonColours.orangeBox} padding="15px" top="200px" dir="column"/>
-            ))}
-            </FlexBox>
-          </FlexBox>
-
-          <FlexBox bgColor="rgba(0, 0, 0, 0.8)" width="85vw" maxWidth="830px" padding="35px" boxShadow={neonColours.greenBox} dir="column" margin="0 0 40px 0">
-            <Heading textShadow={neonColours.greenText} padding="0 0 25px 0">Alcoholic</Heading>
-            <FlexBox flexWrap="wrap">
-            {listOfAlcohol.map((o, index)=>(
-              <Button key={index} txt={o} bgColor={alcoholic == o ? "white" : "black"} color={alcoholic == o ? "black" : "white"} onClick={()=>{setAlcoholic(o)}} height="fit-content" boxShadow={neonColours.greenBox} padding="15px" top="200px" dir="column"/>
-            ))}
-            </FlexBox>
-          </FlexBox>
-          <FlexBox zIndex="1">
+          <FlexBox zIndex="1" ref={ref} as={motion.div} initial={{opacity:0}} animate={control} padding="25px">
             <FlexBox className='block glow' onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</FlexBox>   
           </FlexBox>
 
-          {loading && <Lottie style={{height:300, width:300}} animationData={LoadingAnimation} loop={true}></Lottie>}
-        <FlexBox width="100vw">
-          <FlexBox overflowX="scroll" justifyContent="flex-start" padding="15px">
-          {newCocktails && newCocktails.map(
-            (o, index)=>(
-              <Card as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/3}}} key={index} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox} onClick={()=>{GetChosen(o)}}>
-                <Image src={o.strDrinkThumb} width="100%"></Image>
-                <H4>{o.strDrink}</H4>
-              </Card>
-            )
-          )
-          }
-          </FlexBox>
+          {loading && <Lottie style={{height:300, width:300}} animationData={LoadingAnimation} loop={true}/>}
+
+          <FlexBox width="100vw">
+            <FlexBox overflowX="scroll" justifyContent="flex-start" padding="15px">
+              {newCocktails && newCocktails.map(
+                (o, index)=>(
+                  <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
+                    <Image src={o.strDrinkThumb} width="90%"></Image>
+                    <Text fontSize="18px">{o.strDrink}</Text>
+                  </Card> 
+                )
+              )}
+            </FlexBox>  
+          </FlexBox>  
 
           {activity && 
-          <FlexBox dir="column" alignItems="flex-start" width="850px" height="fit-content" bgColor="rgba(0, 0, 0, 0.65)" padding="3em">
-          <FlexBox>
-            <Text color="white" fontSize="32px">{cardy.strDrink}</Text>
-            {/* <Heading textShadow={neonColours.greenText} padding="0 0 25px 0">{cardy.strDrink}</Heading> */}
-            {/* <Text color="white" fontSize="18px">{cardy.strAlcoholic}</Text> */}
-            <li style={{color:"white", fontSize:"18px", marginLeft:"20px"}}>{cardy.strAlcoholic}</li>
-          </FlexBox>
-          <FlexBox margin="20px 0 40px 0"><Image src={cardy.strDrinkThumb} width="245px"></Image></FlexBox>
-          <FlexBox alignItems="flex-start">
-              <FlexBox dir="column" alignItems="flex-start" width="40%">
-                <Text color="white" fontWeight="bold" fontSize="18px" margin="10px">Ingredients:</Text>
-                <FlexBox dir="column" alignItems="flex-start" margin="10px 0 0 0">{objIngredients.map((ingredient, index) => (<li style={{color:"white", fontSize:"18px"}}>{ingredient}</li>))}</FlexBox>
+              <FlexBox boxShadow={neonColours.pinkBox} dir="column" alignItems="flex-start" width="850px" height="fit-content" bgColor="rgba(0, 0, 0, 0.65)" padding="3em">
+              <FlexBox>
+                <Text color="white" fontSize="32px">{cardy.strDrink}</Text>
+                <li style={{color:"white", fontSize:"18px", marginLeft:"20px"}}>{cardy.strAlcoholic}</li>
               </FlexBox>
-              <FlexBox width="60%" dir="column" alignItems="flex-start">
-                <Text color="white" fontWeight="bold" fontSize="18px">Instructions:</Text>
-                <FlexBox alignItems="flex-start" margin="10px 0 0 0"><Text color="white" fontSize="18px">{cardy.strInstructions}</Text></FlexBox>
+              <FlexBox margin="20px 0 40px 0"><Image src={cardy.strDrinkThumb} width="245px"></Image></FlexBox>
+              <FlexBox alignItems="flex-start">
+                  <FlexBox dir="column" alignItems="flex-start" width="40%">
+                    <Text color="white" fontWeight="bold" fontSize="18px" margin="10px">Ingredients:</Text>
+                    <FlexBox dir="column" alignItems="flex-start" margin="10px 0 0 0">{objIngredients.map((ingredient, index) => (<li style={{color:"white", fontSize:"16px"}}>{ingredient}</li>))}</FlexBox>
+                  </FlexBox>
+                  <FlexBox width="60%" dir="column" alignItems="flex-start">
+                    <Text color="white" fontWeight="bold" fontSize="18px">Instructions:</Text>
+                    <FlexBox alignItems="flex-start" margin="10px 0 0 0"><Text color="white" fontSize="16px">{cardy.strInstructions}</Text></FlexBox>
+                  </FlexBox>
               </FlexBox>
-          </FlexBox>
-            <FlexBox margin="30px 0 0 0">
-              {activity &&
-                <Text color="white" fontSize="18px">Fun activity to do when you get drunk: {activity}</Text>
-              }
+                <FlexBox margin="30px 0 0 0" dir="column">
+                  <Text color="white" fontWeight="bold" fontSize="18px" margin="10px">Fun Activity to try after first drink:</Text>
+                  {activity &&
+                    <Text color="white" fontSize="16px"> {activity}</Text>
+                  }
+                </FlexBox>
             </FlexBox>
+          }
         </FlexBox>
-}
-      </FlexBox>  
-    </FlexBox>
-          
       </main>
     </>
   )
