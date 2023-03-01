@@ -193,9 +193,9 @@ export default function Home() {
             </FlexBox>  
           </FlexBox>  
 
-          {activity && 
+          {/* {cardy &&  */}
           <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity} />
-          }
+          {/* } */}
         </FlexBox>
       </main>
     </>
