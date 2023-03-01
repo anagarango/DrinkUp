@@ -14,13 +14,10 @@ export default function SelectedResult({
     useEffect(()=>{
         if(cardy.strVideo){
             setYoutubeLink(cardy.strVideo.replace("watch?v=", "embed/"))
+            console.log(youtubeLink)
         }
     },[])
         
-
-   
-    console.log(youtubeLink)
-
     return(
         <FlexBox boxShadow={neonColours.pinkBox} dir="column" alignItems="flex-start" width="90vw" maxWidth="850px" height="fit-content" bgColor="rgba(0, 0, 0, 0.65)" padding="3em">
             <FlexBox>
@@ -31,7 +28,7 @@ export default function SelectedResult({
             <FlexBox margin="20px 0 40px 0" width="100%" height="fit-content" justifyContent="space-between">
                 <Image src={cardy.strDrinkThumb} width="40%"/>
                 {cardy.strVideo && <div style={{position:"relative", paddingTop:"40%", width:"55%", display:"flex"}}>
-                        <iframe src={youtubeLink} title="YouTube video player" frameborder="0" style={{position: "absolute", top: 0, left: 0, width:"100%", height: "100%"}}></iframe>
+                        <iframe src={youtubeLink} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen style={{position: "absolute", top: 0, left: 0, width:"100%", height: "100%"}}></iframe>
                     </div>
                 }
             </FlexBox>

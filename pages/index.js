@@ -184,7 +184,7 @@ export default function Home() {
             <FlexBox overflowX="scroll" justifyContent="flex-start" padding="15px">
               {newCocktails && newCocktails.map(
                 (o, index)=>(
-                  <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o); console.log(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
+                  <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
                     <Image src={o.strDrinkThumb} width="90%"></Image>
                     <Text fontSize="18px">{o.strDrink}</Text>
                   </Card> 
