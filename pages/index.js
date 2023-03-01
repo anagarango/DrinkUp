@@ -10,6 +10,7 @@ import { FlexBox, Heading, Paragraph, Image, Card, Text } from '@/styles/global'
 import { neonColours } from '@/styles/neoncolours';
 import NavBar from '@/comps/navbar';
 import Form from '@/comps/form';
+import SelectedResult from '@/comps/selectedResult';
 
 
 
@@ -22,6 +23,7 @@ export default function Home() {
   const [newCocktails, setNewCocktails] = useState()
   const [activity, setActivity] = useState()
   const [objIngredients, setObjIngredients] = useState([])
+  const [objMeasurements, setObjMeasurements] = useState([])
   const [cardy, setCardy] = useState({})
   const [search, setSearch] = useState("")
 
@@ -110,14 +112,18 @@ export default function Home() {
 
   function objectIngredients(data){
     var objIngredients = []
+    var objMeasurements = []
 
     for(var i = 1; i <= 15; i++){
       if(data['strIngredient'+i] !== null){
         objIngredients.push(data['strIngredient'+i])
-
+      }
+      if(data['strMeasure'+i] !== null){
+        objMeasurements.push(data['strMeasure'+i])
       }
     }
     setObjIngredients(objIngredients)
+    setObjMeasurements(objMeasurements)
   }
 
 
@@ -178,7 +184,7 @@ export default function Home() {
             <FlexBox overflowX="scroll" justifyContent="flex-start" padding="15px">
               {newCocktails && newCocktails.map(
                 (o, index)=>(
-                  <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
+                  <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o); console.log(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
                     <Image src={o.strDrinkThumb} width="90%"></Image>
                     <Text fontSize="18px">{o.strDrink}</Text>
                   </Card> 
@@ -188,29 +194,7 @@ export default function Home() {
           </FlexBox>  
 
           {activity && 
-              <FlexBox boxShadow={neonColours.pinkBox} dir="column" alignItems="flex-start" width="850px" height="fit-content" bgColor="rgba(0, 0, 0, 0.65)" padding="3em">
-              <FlexBox>
-                <Text color="white" fontSize="32px">{cardy.strDrink}</Text>
-                <li style={{color:"white", fontSize:"18px", marginLeft:"20px"}}>{cardy.strAlcoholic}</li>
-              </FlexBox>
-              <FlexBox margin="20px 0 40px 0"><Image src={cardy.strDrinkThumb} width="245px"></Image></FlexBox>
-              <FlexBox alignItems="flex-start">
-                  <FlexBox dir="column" alignItems="flex-start" width="40%">
-                    <Text color="white" fontWeight="bold" fontSize="18px" margin="10px">Ingredients:</Text>
-                    <FlexBox dir="column" alignItems="flex-start" margin="10px 0 0 0">{objIngredients.map((ingredient, index) => (<li style={{color:"white", fontSize:"16px"}}>{ingredient}</li>))}</FlexBox>
-                  </FlexBox>
-                  <FlexBox width="60%" dir="column" alignItems="flex-start">
-                    <Text color="white" fontWeight="bold" fontSize="18px">Instructions:</Text>
-                    <FlexBox alignItems="flex-start" margin="10px 0 0 0"><Text color="white" fontSize="16px">{cardy.strInstructions}</Text></FlexBox>
-                  </FlexBox>
-              </FlexBox>
-                <FlexBox margin="30px 0 0 0" dir="column">
-                  <Text color="white" fontWeight="bold" fontSize="18px" margin="10px">Fun Activity to try after first drink:</Text>
-                  {activity &&
-                    <Text color="white" fontSize="16px"> {activity}</Text>
-                  }
-                </FlexBox>
-            </FlexBox>
+          <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity} />
           }
         </FlexBox>
       </main>

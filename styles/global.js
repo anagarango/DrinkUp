@@ -117,5 +117,7 @@ export const Text = styled.p`
 color:${props=>props.color};
 font-size: ${props=>props.fontSize};
 font-weight: ${props=>props.fontWeight};
-margin: ${props=>props.margin}
+margin: ${props=>props.margin};
+width: ${props=>props.width};
+padding: ${props=>props.padding};
 `
