@@ -21,10 +21,10 @@ export default function Home() {
   const [ingredients, setIngredients] = useState("")
   const [alcoholic, setAlcoholic] = useState("")
   const [newCocktails, setNewCocktails] = useState()
-  const [activity, setActivity] = useState()
+  const [activity, setActivity] = useState("")
   const [objIngredients, setObjIngredients] = useState([])
   const [objMeasurements, setObjMeasurements] = useState([])
-  const [cardy, setCardy] = useState({})
+  const [cardy, setCardy] = useState()
   const [search, setSearch] = useState("")
 
   const control = useAnimation()
@@ -64,6 +64,16 @@ export default function Home() {
     },0);
   }
 
+  const GetActivity = async () => {
+    await axios.get('http://www.boredapi.com/api/activity/')
+    .then((response) => {
+      setActivity(response.data.activity);
+      
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
+
   const SearchCocktail = async (event) => {
     if(event.key == "Enter"){
       await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
@@ -99,15 +109,7 @@ export default function Home() {
   }
 
 
-  const GetActivity = async () => {
-    await axios.get('http://www.boredapi.com/api/activity/')
-    .then((response) => {
-      setActivity(response.data.activity);
-      
-    }).catch((error)=>{
-      console.log(error);
-    })
-  }
+
 
 
   function objectIngredients(data){
@@ -193,9 +195,9 @@ export default function Home() {
             </FlexBox>  
           </FlexBox>  
 
-          {/* {cardy &&  */}
+          {cardy && 
           <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity} />
-          {/* } */}
+          }
         </FlexBox>
       </main>
     </>
