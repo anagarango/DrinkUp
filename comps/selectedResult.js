@@ -12,6 +12,7 @@ export default function SelectedResult({
         
 
     useEffect(()=>{
+        console.log(cardy)
         if(cardy.strVideo){
             setYoutubeLink(cardy.strVideo.replace("watch?v=", "embed/"))
             console.log(youtubeLink)
