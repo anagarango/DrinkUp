@@ -8,6 +8,10 @@ export const FlexBox = styled.div`
     flex-wrap: ${props=>props.flexWrap};
     width: ${props=>props.width};
     height: ${props=>props.height};
+    @media (max-width: 480px) {
+      height:${props=>props.heightM || props.height};
+      margin: ${props=>props.marginM || props.margin};
+    }
     background-color: ${props=>props.bgColor};
     padding: ${props=>props.padding};
     margin: ${props=>props.margin || "0px"};
@@ -41,8 +45,12 @@ export const FlexBox = styled.div`
 `
 
 export const Heading = styled.h1`
-    font-family: 'Train One', cursive;  
+    font-family: 'Train One', cursive;
+    // font-family: 'Nothing You Could Do', cursive;
     font-size:${props=>props.fSize || "calc(30px + 55%)"};
+    @media (max-width: 480px) {
+      font-size:${props=>props.fSizesm || props.fSize || "2rem"};
+    }
     font-weight:${props=>props.fWeight};
     color:${props=>props.color};
     padding:${props=>props.padding};
@@ -73,8 +81,29 @@ export const Paragraph = styled.p`
     cursor:${props=>props.cursor};
     text-shadow:${props=>props.textShadow};
     color:${props=>props.color || "white"};
-    text-align:${props=>props.textAlign || "center"}
+    text-align:${props=>props.textAlign || "center"};
+    line-height: ${props=>props.lineHeight};
 `
+
+export const TextCursive = styled.h1`
+    font-family: 'Nothing You Could Do', cursive;
+    font-size:${props=>props.fSize || "calc(30px + 55%)"};
+    font-weight:${props=>props.fWeight};
+    color:${props=>props.color};
+    padding:${props=>props.padding};
+    width:${props=>props.width};
+    position: ${props=>props.position};
+    top:${props=>props.top};
+    left:${props=>props.left};
+    margin:${props=>props.margin};
+    cursor:${props=>props.cursor};
+    text-shadow:${props=>props.textShadow || "0 0 0.01em #fff, 0 0 0.015em #fff, 0 0 0.02em #fff, 0 0 0.02em rgb(176, 119, 255),0 0 0.1em rgb(123, 0, 255), 0 0 0.15em rgba(123, 0, 255,1), 0 0 0.45em rgb(123, 0, 255,1), 0 0 0.12em rgba(123, 0, 255,0)"};
+    color:white;
+    letter-spacing:2px;
+    text-align:${props=>props.textAlign || "center"};
+    padding-bottom:${props=>props.padBod}
+  `
+
 
 export const Image = styled.img`
     min-height:${props=>props.minHeight};
@@ -85,7 +114,11 @@ export const Image = styled.img`
     object-position: ${props=>props.bgPosition};
     background-repeat: no-repeat;
     margin:${props=>props.margin};
-    display:flex;
+    display:${props=>props.display || "flex"};
+    @media (max-width: 480px){
+      display:${props=>props.displayM || props.display || "flex"};
+      margin: ${props=>props.marginM || props.margin};
+    }
     position: ${props=>props.position};
     top:${props=>props.top};
     left:${props=>props.left};
@@ -95,16 +128,16 @@ export const Image = styled.img`
 
 export const Card = styled.div`
   width:25vw;
-  min-width:175px;
-  height:fit-content;
-  max-width:250px;
-  background-color:black;
+  min-width:240px;
+  height:290px;
+  max-width:240px;
+  background-color:#00000063;
   display:flex;
   align-items:center;
   flex-direction:column;
-  padding:10px;
+  padding: 11px 0 20px 0;
   margin:30px 20px;
-  border-radius:10px;
+  // border-radius:10px;
   color:white;
   box-shadow:${props=>props.boxShadow}
 `

@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import LoadingAnimation from '@/public/loadingCocktail.json'
 import axios from 'axios';
 import { listOfAlcohol, listOfCategories, listOfIngredients} from '@/data'
-import { FlexBox, Heading, Paragraph, Image, Card, Text } from '@/styles/global';
+import { FlexBox, Heading, Paragraph, Image, Card, Text, TextCursive } from '@/styles/global';
 import { neonColours } from '@/styles/neoncolours';
 import NavBar from '@/comps/navbar';
 import Form from '@/comps/form';
@@ -154,52 +154,62 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <FlexBox dir="column" bgImage="/Home.jpg" bgPosition="top" bgRepeat="no-repeat">
         <NavBar value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail}/>
 
-        <FlexBox bgImage="/Hero.jpeg" minHeight="fit-content" height="65vh" width="100vw" margin="70px 0 0 0">
-          <FlexBox height="fit-content" width="85vw" maxWidth="830px" boxShadow={neonColours.pinkBox} padding="35px" top="200px" dir="column" bgColor="rgba(0, 0, 0, 0.8)">
-            <Heading>Welcome to DrinkUp</Heading>
-            <Paragraph padding="10px 0 0 0">Simplifying your Cocktail Preferences</Paragraph>
-            <Paragraph textAlign="justify" padding="30px 0 0 0">DrinkUp, a pain-point that became a project, is inspired to help new-legal aged people to find their favourite cocktails to order in their next pub, bar, and/or nightclub visit. Drink Responsibly!</Paragraph>
+        <FlexBox minHeight="fit-content" height="75vh" width="100vw" margin="70px 0 0 0" padding="0 10% 0 10%" justifyContent="space-between">
+          <FlexBox justifyContent="flex-start">
+            <Image displayM="none" className="logo" src="/drinkup logo.png" width="62%"></Image>
+          </FlexBox>
+          <FlexBox height="fit-content" width="70vw" maxWidth="630px" padding="40px 0px 0px 35px" top="200px" dir="column" alignItems="flex-end">
+            <Heading fSize="calc(80px + 55%)" fSizesm="4.5rem" textShadow="0 0 0.01em #fff, 0 0 0.015em #fff, 0 0 0.02em #fff, 0 0 0.02em #d900ff, 0 0 0.1em #d900ff, 0 0 0.15em #d900ff, 0 0 0.45em #d900ff, 0 0 0.12em rgb(123 0 255 / 0%)">DrinkUp</Heading>
+            <Paragraph textAlign="end" padding="50px 0 0 0" lineHeight="23px">Have little cocktail-knowledge experience or don’t know what the hell to order, well look no further!</Paragraph>
+            <Paragraph textAlign="end" padding="30px 0 0 0" lineHeight="23px">Here, you will fill out 3 boxes on your drink preferences, and our smart-finding-your-new-favourite-drink system will recommend you the best cocktails that fill your needs.</Paragraph>
           </FlexBox>
         </FlexBox>
         
-        <FlexBox bgImage="/SecondHero.jpeg" minHeight="400px" height="50vw" width="100vw" dir="column" justifyContent="flex-end">
-          <Heading width="80vw" padBod="35px">Feel Good About What You Drink</Heading>
-          <Image src="/Hero2.png" width="100vw"></Image>
+        <FlexBox minHeight="100px" height="20vw" heightM="0" marginM="30px" width="100vw" dir="column" justifyContent="flex-start">
+          <TextCursive width="80vw" padBod="35px" fSize="20px">The search for the perfect Cocktail is over</TextCursive>
+          <Image src="/arrowDown.svg"></Image>
         </FlexBox>
         
         
-        <FlexBox dir="column" bgColor="#590067" padding="40px 0" width="100vw">
-            <Form boxShadow={neonColours.blueBox} textShadow={neonColours.blueText} formHeading="Categories" array={listOfCategories} onClick={(event)=>{setCategory(event.target.value)}} state={category} ></Form>
-            <Form boxShadow={neonColours.orangeBox} textShadow={neonColours.orangeText} formHeading="Flavours" array={listOfIngredients} onClick={(event)=>{setIngredients(event.target.value)}} state={ingredients} ></Form>
-            <Form boxShadow={neonColours.greenBox} textShadow={neonColours.greenText} formHeading="Alcoholic" array={listOfAlcohol} onClick={(event)=>{setAlcoholic(event.target.value)}} state={alcoholic} ></Form>
+        <FlexBox dir="column" padding="15px 0" width="100vw">
+            <Form boxShadow={neonColours.blueBox} textShadow="white" formHeading="1. Categories" array={listOfCategories} onClick={(event)=>{setCategory(event.target.value)}} state={category} ></Form>
+            <Form boxShadow={neonColours.orangeBox} textShadow="white" formHeading="2. Flavours" array={listOfIngredients} onClick={(event)=>{setIngredients(event.target.value)}} state={ingredients} ></Form>
+            <Form boxShadow={neonColours.pinkBox} textShadow="white" formHeading="3. Alcoholic" array={listOfAlcohol} onClick={(event)=>{setAlcoholic(event.target.value)}} state={alcoholic} ></Form>
 
-          <FlexBox zIndex="1" ref={ref} as={motion.div} initial={{opacity:0}} animate={control} padding="25px">
-            <FlexBox className='block glow' onClick={()=>GetCocktail()}>The search is over! Find your new favourite drink!</FlexBox>   
+          <FlexBox zIndex="1" ref={ref} as={motion.div} initial={{opacity:0}} animate={control} padding="30px">
+            <FlexBox className='block glow' border="rgb(91 6 179) 2px solid" onClick={()=>GetCocktail()} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2}}}>Find your new favourite drink!</FlexBox>   
           </FlexBox>
 
           {loading && <Lottie style={{height:300, width:300}} animationData={LoadingAnimation} loop={true}/>}
 
           <FlexBox width="100vw">
-            <FlexBox overflowX="scroll" justifyContent="flex-start" padding="15px">
+            <FlexBox overflowX="scroll" justifyContent="flex-start" padding="100px 0 0 0">
               {newCocktails && newCocktails.map(
                 (o, index)=>(
                   <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
                     <Image src={o.strDrinkThumb} width="90%"></Image>
-                    <Text fontSize="18px">{o.strDrink}</Text>
+                    <Text padding="15px 0 0 0" fontSize="18px" fontWeight="bold">{o.strDrink}</Text>
                   </Card> 
                 )
               )}
-            </FlexBox>  
+            </FlexBox> 
+
           </FlexBox>  
 
           {cardy && 
-          <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity} />
+          <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity}/>
           }
         </FlexBox>
-      </main>
+      </FlexBox>
+      <footer>
+        <FlexBox dir="column" bgColor="#0A0026" padding="30px 0px 15px 0px">
+          <Paragraph>DrinkUp© - 2023-2023</Paragraph>
+          <Image src='/GitHub.png'></Image>
+        </FlexBox>
+      </footer>
     </>
   )
 }
