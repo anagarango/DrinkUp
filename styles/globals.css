@@ -166,3 +166,9 @@ main{
   filter: blur(20px);
   opacity: 1;
 }
+
+@media (min-width:900px) {
+  .StoneWall{
+    max-width: 100vw;
+  }
+}
