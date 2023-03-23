@@ -185,8 +185,8 @@ export default function Home() {
 
           {loading && <Lottie style={{height:300, width:300}} animationData={LoadingAnimation} loop={true}/>}
 
-          <FlexBox width="100vw">
-            <FlexBox overflowX="scroll" justifyContent="flex-start" padding="100px 0 0 0">
+          <FlexBox width="100vw" dir="column" padding="100px 0 0 0">
+            <FlexBox justifyContent="flex-start" width="fit-content" maxWidth="100%" overflowX="scroll">
               {newCocktails && newCocktails.map(
                 (o, index)=>(
                   <Card onClick={()=> {GetActivity(); GetChosen(o); objectIngredients(o)}} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2, delay: index/4}}} key={o.idDrink} boxShadow={index % 4 == 0 ? neonColours.pinkBox : index % 3 == 0 ? neonColours.greenBox : index % 2 == 0 ? neonColours.orangeBox : neonColours.blueBox}>
@@ -196,7 +196,8 @@ export default function Home() {
                 )
               )}
             </FlexBox> 
-
+            <Image alt="Stone Table" src="/StoneTable.png" height={150} width={300} style={{width:"100%", margin:"-100px 0 0 0"}}/>
+            <Image className='StoneWall' alt="Stone Wall" src="/StoneWall.png" height={150} width={300} style={{width:"200%", height:"100%"}}/>
           </FlexBox>  
 
           {cardy && 
