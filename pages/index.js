@@ -164,12 +164,12 @@ export default function Home() {
         <title>DrinkUp</title>
         <meta name="description" content="Making your drink decisions easier" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/drinkup logo.png" />
       </Head>
       <FlexBox dir="column" bgImage="/Home.jpg" bgPosition="top" bgRepeat="no-repeat">
         <NavBar value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail} bgColor={header ? "black" : "transparent"}/>
 
-        <FlexBox minHeight="fit-content" height="75vh" width="100vw" margin="70px 0 0 0" padding="0 10% 0 10%" justifyContent="space-between">
+        <FlexBox minHeight="fit-content" height="75vh" width="100vw" margin="70px 0 0 0" padding="0 10%" justifyContent="space-between">
           <FlexBox justifyContent="flex-start">
             <Image displayM="none" className="logo" src="/drinkup logo.png" width="62%"></Image>
           </FlexBox>

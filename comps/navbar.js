@@ -15,7 +15,7 @@ export default function NavBar({
             <Image className="logoMobile" src="/drinkup logo.png" width="60px"></Image>
             <Heading className="discoball" textShadow={neonColours.pinkText} onClick={()=>{"/"}}>DrinkUp</Heading>
           </FlexBox>
-          <Image className="discoball" src="/disco.png" width="150px" margin="100px 0 0 0" />
+          <Image className="discoball" src="/disco.png" width="170px" margin="120px 0 0 0" />
           <Input value={value} onChange={onChange} onKeyDown={onKeyDown} placeholder="Search for Cocktail name" display={display}></Input>    
         </FlexBox>
     )

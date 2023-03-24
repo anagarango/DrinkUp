@@ -145,10 +145,14 @@ export const H4 = styled.h4`
 `
 
 export const Text = styled.p`
-color:${props=>props.color};
-font-size: ${props=>props.fontSize};
-font-weight: ${props=>props.fontWeight};
-margin: ${props=>props.margin};
-width: ${props=>props.width};
-padding: ${props=>props.padding};
+  color:${props=>props.color};
+  font-size: ${props=>props.fontSize};
+  font-weight: ${props=>props.fontWeight};
+  margin: ${props=>props.margin};
+  width: ${props=>props.width};
+  padding: ${props=>props.padding};
+`
+
+export const Spacer = styled.pre`
+  height:${props=>props.height}
 `
