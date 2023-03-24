@@ -16,17 +16,9 @@ export default function Button({
   border = "none",
   boxShadow = "0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #08F7FE, 0px 0px 4px 10px rgba(0, 247, 254, 0.18), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #08F7FE, inset 0px 0px 4px 10px rgba(0, 247, 254, 0.18)",
   value="",
-  href
+  href,
+  boxShadowHover = "0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #085c5e, 0px 0px 4px 10px rgba(0, 247, 254, 0.08), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #085c5e, inset 0px 0px 4px 10px rgba(0, 247, 254, 0.08)"
 }) {
-
-  // if (ifThisIsTheCategoriesButtons && !registerValue) {
-  //   if (whatIsTheStateOfTheAppForCategory == value) {
-  //     bgColor = "#4F4DB0";
-  //     color = "white";
-  //     border = "2px solid white";
-  //     axios.post("/api/setSellerStatus", { value });
-  //   }
-  // }
 
   const ButtonClick = styled.button`
     color: ${(props) => props.color};
@@ -41,7 +33,10 @@ export default function Button({
     background-color: ${props=>props.bgColor};
     box-shadow:${props=>props.boxShadow};
     border-radius:${props=>props.borderRadius};
-    cursor:pointer
+    cursor:pointer;
+    &:hover {
+      box-shadow: ${props=>props.boxShadowHover};
+    }
   `;
 
   return (
@@ -61,6 +56,7 @@ export default function Button({
           border={border}
           boxShadow={boxShadow}
           value={value}
+          boxShadowHover={boxShadowHover}
         >
           {txt}
         </ButtonClick>
