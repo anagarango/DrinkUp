@@ -16,7 +16,6 @@ export const FlexBox = styled.div`
     padding: ${props=>props.padding};
     margin: ${props=>props.margin || "0px"};
     min-height: ${props=>props.minHeight};
-    max-height: ${props=>props.maxHeight};
     background-image: ${props=>props.linearGradient || "none"}, url(${props=>props.bgImage});
     background-position: ${props=>props.bgPosition || "center"};
     background-size: ${props=>props.bgSize || "cover"};
@@ -42,11 +41,11 @@ export const FlexBox = styled.div`
     overflow-anchor: ${props=>props.overflowA};
     overflow-x: ${props=>props.overflowX};
     z-index: ${props=>props.zIndex};
+    visibility: ${props=>props.visibility};
 `
 
 export const Heading = styled.h1`
     font-family: 'Train One', cursive;
-    // font-family: 'Nothing You Could Do', cursive;
     font-size:${props=>props.fSize || "calc(30px + 55%)"};
     @media (max-width: 480px) {
       font-size:${props=>props.fSizesm || props.fSize || "2rem"};
@@ -123,7 +122,6 @@ export const Image = styled.img`
     top:${props=>props.top};
     left:${props=>props.left};
     bottom: ${props=>props.bottom};
-    margin: ${props=>props.margin}
 `
 
 export const Card = styled.div`
@@ -147,10 +145,14 @@ export const H4 = styled.h4`
 `
 
 export const Text = styled.p`
-color:${props=>props.color};
-font-size: ${props=>props.fontSize};
-font-weight: ${props=>props.fontWeight};
-margin: ${props=>props.margin};
-width: ${props=>props.width};
-padding: ${props=>props.padding};
+  color:${props=>props.color};
+  font-size: ${props=>props.fontSize};
+  font-weight: ${props=>props.fontWeight};
+  margin: ${props=>props.margin};
+  width: ${props=>props.width};
+  padding: ${props=>props.padding};
+`
+
+export const Spacer = styled.pre`
+  height:${props=>props.height}
 `

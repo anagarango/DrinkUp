@@ -15,7 +15,8 @@ export default function Button({
   onClick = ()=>{},
   border = "none",
   boxShadow = "0px 0px 3px 4px #FFFFFF, 0px 0px 11px 5px #08F7FE, 0px 0px 4px 10px rgba(0, 247, 254, 0.18), inset 0px 0px 4px 3px #FFFFFF, inset 0px 0px 11px 5px #08F7FE, inset 0px 0px 4px 10px rgba(0, 247, 254, 0.18)",
-  value=""
+  value="",
+  href
 }) {
 
   // if (ifThisIsTheCategoriesButtons && !registerValue) {
@@ -39,10 +40,12 @@ export default function Button({
     margin: ${props=>props.margin};
     background-color: ${props=>props.bgColor};
     box-shadow:${props=>props.boxShadow};
-    border-radius:${props=>props.borderRadius}
+    border-radius:${props=>props.borderRadius};
+    cursor:pointer
   `;
 
   return (
+    <a href={href}>
         <ButtonClick
           onClick={onClick}
           fSize={fSize}
@@ -61,5 +64,6 @@ export default function Button({
         >
           {txt}
         </ButtonClick>
+    </a>
   );
 }
