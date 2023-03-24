@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
-import { motion, useAnimation } from 'framer-motion'; 
-import { useInView } from 'react-intersection-observer';
+import Footer from '@/comps/footer';
 import Button from '@/comps/button';
 import { FlexBox, Heading, Paragraph, Image, Card, Text, TextCursive, Spacer } from '@/styles/global';
 import NavBar from '@/comps/navbar';
@@ -57,24 +56,14 @@ export default function Home() {
                 <Image className='cocktailhome' src='/Cocktails.png' width={250} height={250} style={{height:"100%", width:"100%", minHeight:"300px", margin:"-30% 0 0 0"}} />
             </FlexBox>
             <FlexBox bgImage="/HomeCounter.png" bgPosition="bottom" bgRepeat="no-repeat" style={{height:"100%", width:"100vw", minHeight:"fit-content"}}>
-                <FlexBox dir='column' className='block glow' zIndex="1">
-                    <FlexBox width="100%" height="100%" bgColor="black" dir='column'>
+                <FlexBox dir='column' className='block glow' zIndex="1" margin="200px 0">
+                    <FlexBox width="100%" height="100%" padding="100px 70px" bgColor="rgba(0,0,0,0.85)" dir='column'>
                         <TextCursive>Wanna party at the club?</TextCursive>
-                        <Button href="/" bgColor='transparent' txt="Heck Yeah!" padding='15px 50px' margin="35px 0 0 0" boxShadow="0px 0px 3px 3px #FFFFFF, 0px 0px 9px 7px #D255C6, 0px 0px 6px 6px rgba(210, 85, 198, 0.18), inset 0px 0px 3px 3px #FFFFFF, inset 0px 0px 9px 7px #D255C6, inset 0px 0px 6px 6px rgba(210, 85, 198, 0.18)"/>
+                        <Button href="/" bgColor='transparent' txt="Heck Yeah!" padding='15px 50px' margin="35px 0 0 0" boxShadow="0px 0px 3px 3px #FFFFFF, 0px 0px 9px 7px #D255C6, 0px 0px 6px 6px rgba(210, 85, 198, 0.18), inset 0px 0px 3px 3px #FFFFFF, inset 0px 0px 9px 7px #D255C6, inset 0px 0px 6px 6px rgba(210, 85, 198, 0.18)" boxShadowHover="0px 0px 3px 3px #FFFFFF, 0px 0px 9px 7px #6b1a63, 0px 0px 6px 6px rgba(210, 85, 198, 0.18), inset 0px 0px 3px 3px #FFFFFF, inset 0px 0px 9px 7px #6b1a63, inset 0px 0px 6px 6px rgba(210, 85, 198, 0.18)"/>
                     </FlexBox>
                 </FlexBox>
             </FlexBox>
-            <FlexBox className='block glow'>Mom</FlexBox>
-           
-          
-            
-
-        <footer>
-            <FlexBox dir="column" bgColor="#0A0026" padding="30px 0px 15px 0px">
-                <Paragraph>DrinkUp© - 2023-2023</Paragraph>
-                <Image src='/GitHub.png'></Image>
-            </FlexBox>
-        </footer>
+        <Footer />
       </main>
     </>
   )

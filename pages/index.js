@@ -11,6 +11,7 @@ import { neonColours } from '@/styles/neoncolours';
 import NavBar from '@/comps/navbar';
 import Form from '@/comps/form';
 import SelectedResult from '@/comps/selectedResult';
+import Footer from '@/comps/footer';
 
 
 
@@ -217,12 +218,7 @@ export default function Home() {
           }
         </FlexBox>
       </FlexBox>
-      <footer>
-        <FlexBox dir="column" bgColor="#0A0026" padding="30px 0px 15px 0px">
-          <Paragraph>DrinkUp© - 2023-2023</Paragraph>
-          <Image src='/GitHub.png'></Image>
-        </FlexBox>
-      </footer>
+      <Footer />
     </>
   )
 }
