@@ -26,6 +26,7 @@ export default function Home() {
   const [objMeasurements, setObjMeasurements] = useState([])
   const [cardy, setCardy] = useState()
   const [search, setSearch] = useState("")
+  const [header, setHeader] = useState(false)
 
   const control = useAnimation()
   const [ref, inView] = useInView({triggerOnce: true})
@@ -144,6 +145,17 @@ export default function Home() {
         scale:0
       })
     }
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", () =>{
+          if(window.pageYOffset > 550){
+            setHeader(true)
+          } else {
+            setHeader(false)
+          }
+      });
+    }
+
   }, [control, inView])
 
   return (
@@ -155,7 +167,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <FlexBox dir="column" bgImage="/Home.jpg" bgPosition="top" bgRepeat="no-repeat">
-        <NavBar value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail}/>
+        <NavBar value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail} bgColor={header ? "black" : "transparent"}/>
 
         <FlexBox minHeight="fit-content" height="75vh" width="100vw" margin="70px 0 0 0" padding="0 10% 0 10%" justifyContent="space-between">
           <FlexBox justifyContent="flex-start">
