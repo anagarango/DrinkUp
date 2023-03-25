@@ -12,11 +12,16 @@ export const FlexBox = styled.div`
       height:${props=>props.heightM || props.height};
       margin: ${props=>props.marginM || props.margin};
     }
+    &:hover {
+      background-color: ${props=>props.bgColorHover};
+      transform:${props=>props.transformHover};
+      transition:${props=>props.transitionHover}
+    }
     background-color: ${props=>props.bgColor};
     padding: ${props=>props.padding};
     margin: ${props=>props.margin || "0px"};
     min-height: ${props=>props.minHeight};
-    background-image: ${props=>props.linearGradient || "none"}, url(${props=>props.bgImage});
+    background-image: url(${props=>props.bgImage});
     background-position: ${props=>props.bgPosition || "center"};
     background-size: ${props=>props.bgSize || "cover"};
     background-repeat: ${props=>props.bgRepeat};
@@ -42,10 +47,11 @@ export const FlexBox = styled.div`
     overflow-x: ${props=>props.overflowX};
     z-index: ${props=>props.zIndex};
     visibility: ${props=>props.visibility};
+    background: ${props=>props.background}
 `
 
 export const Heading = styled.h1`
-    font-family: 'Train One', cursive;
+    font-family: ${props=>props.fontFamily || "'Train One', cursive"};
     font-size:${props=>props.fSize || "calc(30px + 55%)"};
     @media (max-width: 480px) {
       font-size:${props=>props.fSizesm || props.fSize || "2rem"};
@@ -122,6 +128,8 @@ export const Image = styled.img`
     top:${props=>props.top};
     left:${props=>props.left};
     bottom: ${props=>props.bottom};
+    object-fit: ${props=>props.objectFit};
+    aspect-ratio:${props=>props.aspectRatio}
 `
 
 export const Card = styled.div`

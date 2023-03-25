@@ -2,19 +2,11 @@ import Head from 'next/head'
 import { useEffect, useState, useRef } from 'react'
 import Footer from '@/comps/footer';
 import Button from '@/comps/button';
-import { FlexBox, Heading, Paragraph, Image, Card, Text, TextCursive, Spacer } from '@/styles/global';
+import { FlexBox, Heading, Paragraph, Image, TextCursive, Spacer } from '@/styles/global';
 import NavBar from '@/comps/navbar';
-
-
-
 
 export default function Home() {
   const [header, setHeader] = useState(false)
-
-
-
-
-  
 
   useEffect(() => {
     if (typeof window !== "undefined") {

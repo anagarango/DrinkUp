@@ -1,0 +1,44 @@
+[
+    {
+        "name":"Bar None",
+        "address":"1222 Hamilton St. Vancouver, BC",
+        "image": "/barnone.png",
+        "caption": "Yaletown’s only and Vancouver’s most prolific and long-lasting club",
+        "link": "https://barnoneclub.com/"
+    },
+    {
+        "name":"Gorg-O-Mish",
+        "address":"695 Smithe Street, Vancouver, BC",
+        "image":"/gorgomish.jpeg",
+        "caption":"The backbone of Vancouver nightlife",
+        "link":"https://www.gorgomish.com"
+    },
+    {
+        "name":"The Roxy Cabaret",
+        "address":"932 Granville Street, Vancouver, BC",
+        "image":"/roxy.jpeg",
+        "caption":"The nightclub for pop, rock, and country music lovers.",
+        "link":"https://roxyvan.com"
+    },
+    {
+        "name":"Fortune Sound Club",
+        "address":"147 E Pender Street, Vancouver, BC",
+        "image":"/fortune.jpeg",
+        "caption":"Dance club with state-of-the-art sound system with chic design",
+        "link":"https://www.fortunesoundclub.com/"
+    },
+    {
+        "name":"Fox Cabaret",
+        "address":"2321 Main St, Vancouver, BC",
+        "image":"/fox.jpg",
+        "caption":"Dim upstairs cocktail bar serving classic sips & small bites in swank digs",
+        "link":"https://www.ombreshowlounge.com/"
+    },
+    {
+        "name":"Ombre Show Lounge",
+        "address":"350 Water Street, Vancouver, BC",
+        "image":"/ombreshow.png",
+        "caption":"Full of live entertainment, and a stocked bar with top-notch entertainers",
+        "link":"https://www.ombreshowlounge.com/"
+    }
+]
