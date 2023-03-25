@@ -182,8 +182,8 @@ export default function Home() {
         </FlexBox>
         
         <FlexBox minHeight="100px" height="20vw" heightM="0" marginM="30px" width="100vw" dir="column" justifyContent="flex-start">
-          <TextCursive width="80vw" padBod="35px" fSize="20px">The search for the perfect Cocktail is over</TextCursive>
-          <Image src="/arrowDown.svg"></Image>
+          <TextCursive width="80vw" padBod="30px" fSize="20px">The search for the perfect Cocktail is over</TextCursive>
+          <Image src="/arrowDown.gif" width="70px"/>
         </FlexBox>
         
         
