@@ -31,7 +31,7 @@ export default function Home() {
       </Head>
       <main>
             <NavBar display={false} bgColor={header ? "black" : "transparent"}/>
-            <FlexBox bgImage="/Hero.png" bgPosition="bottom" bgRepeat="no-repeat" className="homehero" minHeight="95vh" height="fit-content" width="100vw" justifyContent="center" padding="80px 0 0 0">
+            <FlexBox bgImage="/Hero.png" bgPosition="bottom" bgRepeat="no-repeat" className="homehero" minHeight="90vh" height="fit-content" width="100vw" justifyContent="center" padding="80px 0 0 0">
                 <FlexBox height="fit-content" width="50%" dir="column" alignItems="flex-start" maxWidth="600px">
                     <Heading fSize="calc(70px + 45%)" fSizesm="4.5rem" textShadow="0 0 0.01em #fff, 0 0 0.015em #fff, 0 0 0.02em #fff, 0 0 0.02em #d900ff, 0 0 0.1em #d900ff, 0 0 0.15em #d900ff, 0 0 0.45em #d900ff, 0 0 0.12em rgb(123 0 255 / 0%)">DrinkUp</Heading>
                     <TextCursive fSize="25px" textAlign="start">Simplifying your Cocktail Preferences</TextCursive>
@@ -42,7 +42,10 @@ export default function Home() {
                     <Image className="logo" src="/drinkup logo.png" width="100%" />
                 </FlexBox>
             </FlexBox>
-            <Spacer height="70px" />
+            <FlexBox margin="-30px 0 0 0" height="20vw" heightM="0" marginM="30px" width="100vw" dir="column" justifyContent="flex-start">
+              <TextCursive width="80vw" padBod="20px" fSize="20px">Looking for nightclubs?</TextCursive>
+              <Image src="/arrowDown.gif" width="70px"/>
+            </FlexBox>
             <FlexBox dir='column'>
                 <Image src='/HomeBack.png' width={250} height={250} style={{height:"100%", width:"120%", minHeight:"400px"}}/>
                 <Image className='cocktailhome' src='/Cocktails.png' width={250} height={250} style={{height:"100%", width:"100%", minHeight:"300px", margin:"-30% 0 0 0"}} />
