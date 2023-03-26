@@ -167,16 +167,16 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/drinkup logo.png" />
       </Head>
-      <FlexBox dir="column" bgImage="/Home.jpg" bgPosition="top" bgRepeat="no-repeat">
+      <FlexBox dir="column" bgImage="/bar.png" bgPosition="top" bgRepeat="no-repeat">
         <NavBar value={search} onChange={event => setSearch(event.target.value)} onKeyDown={SearchCocktail} bgColor={header ? "black" : "transparent"}/>
 
-        <FlexBox minHeight="fit-content" height="75vh" width="100vw" margin="70px 0 0 0" padding="0 10%" justifyContent="space-between">
+        <FlexBox id='flex' minHeight="fit-content" height="75vh" width="100vw" margin="70px 0 0 0" padding="0 10%" paddingM="0 5%" justifyContent="space-between">
           <FlexBox justifyContent="flex-start">
-            <Image displayM="none" className="logo" src="/drinkup logo.png" width="62%"></Image>
+            <Image displayM="none" widthM="300px" className="logo" src="/drinkup logo.png" width="62%"></Image>
           </FlexBox>
           <FlexBox height="fit-content" width="70vw" maxWidth="630px" padding="40px 0px 0px 35px" top="200px" dir="column" alignItems="flex-end">
-            <Heading fSize="calc(80px + 55%)" fSizesm="4.5rem" textShadow="0 0 0.01em #fff, 0 0 0.015em #fff, 0 0 0.02em #fff, 0 0 0.02em #d900ff, 0 0 0.1em #d900ff, 0 0 0.15em #d900ff, 0 0 0.45em #d900ff, 0 0 0.12em rgb(123 0 255 / 0%)">DrinkUp</Heading>
-            <Paragraph textAlign="end" padding="50px 0 0 0" lineHeight="23px">Have little cocktail-knowledge experience or don’t know what the hell to order, well look no further!</Paragraph>
+            <Heading id='heading' fSize="calc(80px + 55%)" fSizesm="4.5rem" textShadow="0 0 0.01em #fff, 0 0 0.015em #fff, 0 0 0.02em #fff, 0 0 0.02em #d900ff, 0 0 0.1em #d900ff, 0 0 0.15em #d900ff, 0 0 0.45em #d900ff, 0 0 0.12em rgb(123 0 255 / 0%)">DrinkUp</Heading>
+            <Paragraph id='paragraph' textAlign="end" padding="50px 0 0 0" lineHeight="23px">Have little cocktail-knowledge experience or don’t know what the hell to order, well look no further!</Paragraph>
             <Paragraph textAlign="end" padding="30px 0 0 0" lineHeight="23px">Here, you will fill out 3 boxes on your drink preferences, and our smart-finding-your-new-favourite-drink system will recommend you the best cocktails that fill your needs.</Paragraph>
           </FlexBox>
         </FlexBox>
@@ -187,7 +187,7 @@ export default function Home() {
         </FlexBox>
         
         
-        <FlexBox dir="column" padding="15px 0" width="100vw">
+        <FlexBox dir="column" padding="15px 0 0 0" width="100vw">
             <Form boxShadow={neonColours.blueBox} textShadow="white" formHeading="1. Categories" array={listOfCategories} onClick={(event)=>{setCategory(event.target.value)}} state={category} ></Form>
             <Form boxShadow={neonColours.orangeBox} textShadow="white" formHeading="2. Flavours" array={listOfIngredients} onClick={(event)=>{setIngredients(event.target.value)}} state={ingredients} ></Form>
             <Form boxShadow={neonColours.pinkBox} textShadow="white" formHeading="3. Alcoholic" array={listOfAlcohol} onClick={(event)=>{setAlcoholic(event.target.value)}} state={alcoholic} ></Form>
@@ -210,12 +210,16 @@ export default function Home() {
               )}
             </FlexBox> 
             <Image alt="Stone Table" src="/StoneTable.png" height={150} width={300} style={{width:"100%", margin:"-100px 0 0 0"}}/>
-            <Image className='StoneWall' alt="Stone Wall" src="/StoneWall.png" height={150} width={300} style={{width:"200%", height:"100%"}}/>
+            
+            <FlexBox height={150} width={300} style={{width:"200%", height:"100%"}} className='StoneWall' alt="Stone Wall" bgImage="/StoneWall.png" padding="0 0 50px 0">
+              {cardy && 
+              <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity}/>
+              }
+            </FlexBox>
+
           </FlexBox>  
 
-          {cardy && 
-          <SelectedResult cardy={cardy} ingredientArray={objIngredients} measurementArray={objMeasurements} activity={activity}/>
-          }
+          
         </FlexBox>
       </FlexBox>
       <Footer />

@@ -36,9 +36,9 @@ export default function Clubs(){
       </Head>
       <main>
             <NavBar display={false} bgColor={header ? "black" : "transparent"}/>
-            <FlexBox bgImage="/brickwall.jpeg" bgPosition="bottom" bgSize="contain" bgRepeat="repeat" width="100%" height="10%" justifyContent="center" flexWrap="wrap">
+            <FlexBox id='flex' bgImage="/brickwall.jpeg" bgPosition="bottom" bgSize="contain" bgRepeat="repeat" width="100%" height="10%" justifyContent="center" flexWrap="wrap">
                 <FlexBox background="linear-gradient(black, transparent, transparent, transparent, transparent, transparent, transparent, black);" width="100%" height="10%" padding="500px 0">
-                    <FlexBox dir="column" width="100%" alignItems="center" maxWidth="500px">
+                    <FlexBox id='box' dir="column" width="100%" alignItems="center" maxWidth="500px">
                         {VancouverClubs.map((o,i)=>{
                             if(i % 2 == 0){
                                 return(
