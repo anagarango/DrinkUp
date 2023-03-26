@@ -8,6 +8,9 @@ export const FlexBox = styled.div`
     flex-wrap: ${props=>props.flexWrap};
     width: ${props=>props.width};
     height: ${props=>props.height};
+    @media (max-width: 820px){
+      padding: ${props=>props.paddingM || props.padding};
+    }
     @media (max-width: 480px) {
       height:${props=>props.heightM || props.height};
       margin: ${props=>props.marginM || props.margin};
@@ -123,6 +126,10 @@ export const Image = styled.img`
     @media (max-width: 480px){
       display:${props=>props.displayM || props.display || "flex"};
       margin: ${props=>props.marginM || props.margin};
+    }
+    @media (max-width: 820px){
+      margin: ${props=>props.marginM || props.margin};
+      width: ${props=>props.widthM || props.width};
     }
     position: ${props=>props.position};
     top:${props=>props.top};
