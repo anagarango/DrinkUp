@@ -25,6 +25,7 @@ export default function Home() {
   const [activity, setActivity] = useState("")
   const [objIngredients, setObjIngredients] = useState([])
   const [objMeasurements, setObjMeasurements] = useState([])
+  const [errorMessage, setErrorMessage] = useState("")
   const [cardy, setCardy] = useState()
   const [search, setSearch] = useState("")
   const [header, setHeader] = useState(false)
@@ -39,6 +40,7 @@ export default function Home() {
     var allCocktails = []
     setLoading(true);
     setNewCocktails()
+    setErrorMessage("")
 
     for(let q = 'a'.charCodeAt(0); q <= 'z'.charCodeAt(0); q++) {
       let letter = String.fromCharCode(q);
@@ -59,11 +61,13 @@ export default function Home() {
           console.log(error);
       })
     }
-
-    setTimeout(() => {
-        setNewCocktails(allCocktails)
-        setLoading(false)
-    },0);
+      if(allCocktails.length > 0){
+          setNewCocktails(allCocktails)
+          setLoading(false)
+      } else {
+          setErrorMessage("Looks like we can't find drinks with your specifications. Change around one of the inputs for new results.")
+          setLoading(false)
+      }
   }
 
   const GetActivity = async () => {
@@ -78,6 +82,7 @@ export default function Home() {
 
   const SearchCocktail = async (event) => {
     if(event.key == "Enter"){
+      setErrorMessage("")
       await axios.get(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${search}`)
       .then((results) => {
         setLoading(true);
@@ -189,8 +194,8 @@ export default function Home() {
         
         <FlexBox dir="column" padding="15px 0 0 0" width="100vw">
             <Form boxShadow={neonColours.blueBox} textShadow="white" formHeading="1. Categories" array={listOfCategories} onClick={(event)=>{setCategory(event.target.value)}} state={category} ></Form>
-            <Form boxShadow={neonColours.orangeBox} textShadow="white" formHeading="2. Flavours" array={listOfIngredients} onClick={(event)=>{setIngredients(event.target.value)}} state={ingredients} ></Form>
-            <Form boxShadow={neonColours.pinkBox} textShadow="white" formHeading="3. Alcoholic" array={listOfAlcohol} onClick={(event)=>{setAlcoholic(event.target.value)}} state={alcoholic} ></Form>
+            <Form boxShadow={neonColours.orangeBox} textShadow="white" formHeading="2. Ingredient" array={listOfIngredients} onClick={(event)=>{setIngredients(event.target.value)}} state={ingredients} boxShadowHover="0px 0px 3px 3px #FFFFFF, 0px 0px 9px 7px #803f16, 0px 0px 6px 6px rgba(233, 114, 39, 0.18), inset 0px 0px 3px 3px #FFFFFF, inset 0px 0px 9px 7px #803f16, inset 0px 0px 6px 6px rgba(233, 114, 39, 0.18)"></Form>
+            <Form boxShadow={neonColours.pinkBox} textShadow="white" formHeading="3. Alcoholic" array={listOfAlcohol} onClick={(event)=>{setAlcoholic(event.target.value)}} state={alcoholic} boxShadowHover="0px 0px 3px 3px #FFFFFF, 0px 0px 9px 7px #752d6e, 0px 0px 6px 6px rgba(210, 85, 198, 0.18), inset 0px 0px 3px 3px #FFFFFF, inset 0px 0px 9px 7px #752d6e, inset 0px 0px 6px 6px rgba(210, 85, 198, 0.18)"></Form>
 
           <FlexBox zIndex="1" ref={ref} as={motion.div} initial={{opacity:0}} animate={control} padding="30px">
             <FlexBox className='block glow' border="rgb(91 6 179) 2px solid" onClick={()=>GetCocktail()} as={motion.div} whileHover={{scale:1.1}} initial={{opacity:0}} animate={{opacity: 1, transition: {duration:0.2}}}>Find your new favourite drink!</FlexBox>   
@@ -208,6 +213,11 @@ export default function Home() {
                   </Card> 
                 )
               )}
+              {errorMessage && 
+                  <FlexBox maxWidth="400px" height="fit-content" bgColor="rgba(0,0,0,0.8)" padding="50px" margin="0 0 90px 0">
+                    <Heading fSize="25px" width="fit-content" height="fit-content" color="white">Looks like we can't find drinks with your specifications. Change around one of the inputs for new results</Heading>
+                  </FlexBox>
+              }
             </FlexBox> 
             <Image alt="Stone Table" src="/StoneTable.png" height={150} width={300} style={{width:"100%", margin:"-100px 0 0 0"}}/>
             
