@@ -7,6 +7,7 @@ export default function Form({
     formHeading="",
     array=[],
     state="",
+    boxShadowHover,
     onClick=()=>{}
 
 }){
@@ -15,7 +16,7 @@ export default function Form({
             <Heading textShadow={textShadow} padding="0 0 25px 0">{formHeading}</Heading>
             <FlexBox flexWrap="wrap" justifyContent="flex-start">
               {array.map((o, index)=>(
-                <Button value={o} key={index} txt={o} bgColor={state == o ? "white" : "black"} color={state == o ? "black" : "white"} onClick={onClick} height="fit-content" boxShadow={boxShadow} padding="15px" top="200px" dir="column"></Button>
+                <Button value={o} key={index} txt={o} bgColor={state == o ? "white" : "black"} color={state == o ? "black" : "white"} onClick={onClick} height="fit-content" boxShadow={boxShadow} boxShadowHover={boxShadowHover} padding="15px" top="200px" dir="column"></Button>
                ))}
             </FlexBox>
           </FlexBox>
